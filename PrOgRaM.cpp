@@ -10,13 +10,51 @@ int main(int argc, char* argv[]){
   else{
     std::string result = "";
     std::string cargv = "";
+    int spc_idx = 0; // space index
+    int spc_pos[255]; //
 
+    // convert to upper case
     cargv = argv[1];
     for(unsigned long i=0; i<cargv.length(); i++)
       result += convert_toupr(cargv[i]);
-    std::cout << result << std::endl;
 
+    // check where is space position
+    for(unsigned long i=0; i<result.length(); i++){
+      if((int)result[i] == 32){
+        spc_pos[spc_idx] = i;
+        spc_idx++;
+      }
+    }
+
+    // remove the space
+    cargv = result;
+    result = "";
+    for(unsigned long i=0; i<cargv.length(); i++){
+      if(cargv[i] != (char)32)
+        result += cargv[i];
+    }
+
+    // convert the text
     result = odd_convert(result);
+
+    // Bring back the space to the text
+    cargv = result;
+    result = "";
+    spc_idx = 0; // reset the index value
+    int error = 0;
+
+    for(unsigned long i=0; i<cargv.length(); i++){
+      if(i == (unsigned long)(spc_pos[spc_idx] - error)){
+        result += (char)32;
+        result += cargv[i];
+
+        if(spc_idx >= 0)
+          error++;
+        spc_idx++;
+      }else result += cargv[i];
+    }
+    std::cout << std::endl;
+
     std::cout << result << std::endl << std::endl;
   }
 
