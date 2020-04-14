@@ -41,15 +41,14 @@ int main(int argc, char* argv[]){
     cargv = result;
     result = "";
     spc_idx = 0; // reset the index value
-    int error = 0;
+    int error = 0; // i dunno where is the bug, but i need this for error correction
 
     for(unsigned long i=0; i<cargv.length(); i++){
       if(i == (unsigned long)(spc_pos[spc_idx] - error)){
         result += (char)32;
         result += cargv[i];
 
-        if(spc_idx >= 0)
-          error++;
+        error++;
         spc_idx++;
       }else result += cargv[i];
     }
